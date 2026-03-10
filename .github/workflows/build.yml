@@ -49,7 +49,7 @@ jobs:
       - name: Run ndk-build (arm64-v8a)
         working-directory: ${{ env.JNI_DIR }}
         run: |
-          cd Build
+          
           "${{ env.NDK_DIR }}/ndk-build" \
             NDK_PROJECT_PATH=. \
             NDK_APPLICATION_MK=Application.mk \
