@@ -7,6 +7,11 @@ LOCAL_MODULE := lib_git_freetype
 LOCAL_SRC_FILES := src/ImGui/misc/git_freetype/$(TARGET_ARCH_ABI)/libfreetype.a
 include $(PREBUILT_STATIC_LIBRARY)
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := dobby
+LOCAL_SRC_FILES := include/Dobby/$(TARGET_ARCH_ABI)/libdobby.a
+include $(PREBUILT_STATIC_LIBRARY)
+
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := AndroidSurfaceImguiEnhanced
@@ -56,11 +61,12 @@ LOCAL_SRC_FILES += src/ImGui/backends/imgui_impl_opengl3.cpp
 LOCAL_SRC_FILES += src/ImGui/backends/imgui_impl_vulkan.cpp
 LOCAL_SRC_FILES += src/ImGui/misc/freetype/imgui_freetype.cpp
 LOCAL_SRC_FILES += src/My_Utils/stb_image.cpp
+LOCAL_SRC_FILES += $(wildcard src/xdl/*.c)
     
 
 
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv3
 LOCAL_LDLIBS += -lz #freetype需要
-LOCAL_STATIC_LIBRARIES := lib_git_freetype
+LOCAL_STATIC_LIBRARIES := lib_git_freetype dobby
 
 include $(BUILD_EXECUTABLE) #可执行文件

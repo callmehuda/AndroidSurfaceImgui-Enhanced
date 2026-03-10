@@ -1,0 +1,79 @@
+name: Build ARM64 .so
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build shared library (arm64-v8a)
+    runs-on: ubuntu-latest
+
+    env:
+      NDK_VERSION: r27d
+      NDK_URL: https://dl.google.com/android/repository/android-ndk-r27d-linux.zip
+      NDK_DIR: ${{ github.workspace }}/android-ndk-r27d
+      JNI_DIR: ${{ github.workspace }}/jni
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Cache NDK ──────────────────────────────────────────────────────────
+      - name: Cache NDK r27d
+        id: cache-ndk
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.NDK_DIR }}
+          key: android-ndk-${{ env.NDK_VERSION }}-linux
+
+      - name: Download & extract NDK r27d
+        if: steps.cache-ndk.outputs.cache-hit != 'true'
+        run: |
+          echo "Downloading NDK ${{ env.NDK_VERSION }}..."
+          wget -q "${{ env.NDK_URL }}" -O ndk.zip
+          echo "Extracting NDK..."
+          unzip -q ndk.zip -d "${{ github.workspace }}"
+          rm ndk.zip
+          echo "NDK extracted to ${{ env.NDK_DIR }}"
+
+      - name: Verify NDK
+        run: |
+          "${{ env.NDK_DIR }}/ndk-build" --version
+          echo "NDK_HOME=${{ env.NDK_DIR }}" >> $GITHUB_ENV
+
+      # ── Build ──────────────────────────────────────────────────────────────
+      - name: Run ndk-build (arm64-v8a)
+        working-directory: ${{ env.JNI_DIR }}
+        run: |
+          cd Build
+          "${{ env.NDK_DIR }}/ndk-build" \
+            NDK_PROJECT_PATH=. \
+            NDK_APPLICATION_MK=Application.mk \
+            APP_BUILD_SCRIPT=Android.mk \
+            NDK_LIBS_OUT="${{ github.workspace }}/output/libs" \
+            NDK_OUT="${{ github.workspace }}/output/obj" \
+            APP_ABI=arm64-v8a \
+            -j$(nproc) \
+            V=0
+
+      - name: Locate built .so
+        run: |
+          echo "=== Build output ==="
+          find "${{ github.workspace }}/output" -name "*.so" | tee built_libs.txt
+          if [ ! -s built_libs.txt ]; then
+            echo "ERROR: No .so files found!"
+            exit 1
+          fi
+
+      # ── Upload artifact ────────────────────────────────────────────────────
+      - name: Upload shared library
+        uses: actions/upload-artifact@v4
+        with:
+          name: mymod-arm64-v8a
+          path: output/libs/arm64-v8a/*.so
+          if-no-files-found: error
+          retention-days: 30

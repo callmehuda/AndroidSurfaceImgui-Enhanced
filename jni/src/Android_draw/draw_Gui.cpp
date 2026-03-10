@@ -8,6 +8,8 @@
    
 #include "My_icon/pic_ZhenAiKun_png.h"
 
+#include "Vars.h"
+
 bool permeate_record = false;
 bool permeate_record_ini = false;
 struct Last_ImRect LastCoordinate = {0, 0, 0, 0};
@@ -105,59 +107,67 @@ void Layout_tick_UI(bool *main_thread_flag) {
         static int counter = 0;
         static int style_idx = 0;
         static ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+        ImGui::StyleColorsClassic();
         ImGui::Begin("AndroidSurfaceImguiEnhanced", main_thread_flag);  // Create a window called "Hello, world!" and append into it.
-        if (::permeate_record_ini) {
-            ImGui::SetWindowPos({LastCoordinate.Pos_x, LastCoordinate.Pos_y});
-            ImGui::SetWindowSize({LastCoordinate.Size_x, LastCoordinate.Size_y});
-            permeate_record_ini = false;   
-        }
-        ImGui::Text("渲染接口 : %s, gui版本 : %s", graphics->RenderName, ImGui::GetVersion());               // Display some text (you can use a format strings too)
-		if (ImGui::Combo("##主题", &style_idx, "白色主题\0蓝色主题\0紫色主题\0")) {
-			switch (style_idx) {
-				case 0: ImGui::StyleColorsLight(); break;
-				case 1: ImGui::StyleColorsDark(); break;
-				case 2: ImGui::StyleColorsClassic(); break;
-			}
-		}
-		
-        if (ImGui::Checkbox("过录制", &::permeate_record)) {
-            ::permeate_record_ini = true;
-        }
-            
-        ImGui::Checkbox("演示窗口", &show_demo_window);      // Edit bools storing our window open/close state
-        ImGui::SameLine();
-        ImGui::Checkbox("绘制射线", &show_draw_Line);
-        ImGui::Checkbox("坤坤窗口", &show_another_window);
-        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-        ImGui::ColorEdit4("取色器", (float *) &clear_color); // Edit 3 floats representing a color
-        if (ImGui::Button("Button")) {
-            counter++;
-        }
         
-        ImGui::SameLine();
-        ImGui::Text("计数 = %d", counter);
-        ImGui::Text("窗口集中 = %d", ImGui::IsWindowFocused(ImGuiFocusedFlags_AnyWindow));
-        ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "应用平均 %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        g_window = ImGui::GetCurrentWindow();
+        ImGui::Checkbox("Aurora", &snowAurora);
+        ImGui::Checkbox("Prepare", &forceIsPrepare);
+        if (ImGui::Button("Tambah Es")){
+            startPreparePhaseMethod->Invoke<void>();
+        }
         ImGui::End();
-    }
+        // if (::permeate_record_ini) {
+            // ImGui::SetWindowPos({LastCoordinate.Pos_x, LastCoordinate.Pos_y});
+            // ImGui::SetWindowSize({LastCoordinate.Size_x, LastCoordinate.Size_y});
+            // permeate_record_ini = false;   
+        // }
+        // ImGui::Text("渲染接口 : %s, gui版本 : %s", graphics->RenderName, ImGui::GetVersion());               // Display some text (you can use a format strings too)
+		// if (ImGui::Combo("##主题", &style_idx, "白色主题\0蓝色主题\0紫色主题\0")) {
+			// switch (style_idx) {
+				// case 0: ImGui::StyleColorsLight(); break;
+				// case 1: ImGui::StyleColorsDark(); break;
+				// case 2: ImGui::StyleColorsClassic(); break;
+			// }
+		// }
+		
+        // if (ImGui::Checkbox("过录制", &::permeate_record)) {
+            // ::permeate_record_ini = true;
+        // }
+            
+        // ImGui::Checkbox("演示窗口", &show_demo_window);      // Edit bools storing our window open/close state
+        // ImGui::SameLine();
+        // ImGui::Checkbox("绘制射线", &show_draw_Line);
+        // ImGui::Checkbox("坤坤窗口", &show_another_window);
+        // ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+        // ImGui::ColorEdit4("取色器", (float *) &clear_color); // Edit 3 floats representing a color
+        // if (ImGui::Button("Button")) {
+            // counter++;
+        // }
+        
+        // ImGui::SameLine();
+        // ImGui::Text("计数 = %d", counter);
+        // ImGui::Text("窗口集中 = %d", ImGui::IsWindowFocused(ImGuiFocusedFlags_AnyWindow));
+        // ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "应用平均 %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        // g_window = ImGui::GetCurrentWindow();
+        // ImGui::End();
+    // }
     
         
-    if (show_another_window) { // 3. Show another simple window.
-        ImGui::Begin("另一个窗口", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-        ImGui::Text("另一个窗口的 爱坤!");
-        ImGui::Image(Aekun_image.DS, ImVec2(170, 170));
-        if (ImGui::Button("关闭这个坤口")) {
-            show_another_window = false;
-        }
-        ImGui::End();
-    }
+    // if (show_another_window) { // 3. Show another simple window.
+        // ImGui::Begin("另一个窗口", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+        // ImGui::Text("另一个窗口的 爱坤!");
+        // ImGui::Image(Aekun_image.DS, ImVec2(170, 170));
+        // if (ImGui::Button("关闭这个坤口")) {
+            // show_another_window = false;
+        // }
+        // ImGui::End();
+    // }
             
-    if (show_demo_window) {
-        ImGui::ShowDemoWindow(&show_demo_window);
-    }
+    // if (show_demo_window) {
+        // ImGui::ShowDemoWindow(&show_demo_window);
+    // }
 
-    if (show_draw_Line)
-        ImGui::GetForegroundDrawList()->AddLine(ImVec2(0,0),ImVec2(displayInfo.width, displayInfo.height),IM_COL32(255,0,0,255),4);
+    // if (show_draw_Line)
+        // ImGui::GetForegroundDrawList()->AddLine(ImVec2(0,0),ImVec2(displayInfo.width, displayInfo.height),IM_COL32(255,0,0,255),4);
 
 }

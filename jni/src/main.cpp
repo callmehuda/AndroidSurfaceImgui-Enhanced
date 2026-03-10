@@ -2,9 +2,18 @@
 #include "AndroidImgui.h"     //创建绘制套
 #include "GraphicsManager.h" //获取 当前渲染模式
 
-
+#include "xdl.h"
+#include "Hooks.h"
+#define ANDROID_MODE 1
 
 int main(int argc, char *argv[]) {
+
+    UnityResolve::Init(xdl_open("/data/data/com.mobilechess.gp/app_libs/liblogic.so", XDL_TRY_FORCE_LOAD), UnityResolve::Mode::Il2cpp);
+    UnityResolve::ThreadAttach();
+    
+    Setup_Hooks();
+
+
     ::graphics = GraphicsManager::getGraphicsInterface(GraphicsManager::VULKAN);
 
     //获取屏幕信息    
@@ -38,6 +47,7 @@ int main(int argc, char *argv[]) {
     }
     
     // graphics->DeleteTexture(image);
+    UnityResolve::ThreadDetach();
     graphics->Shutdown();
     android::ANativeWindowCreator::Destroy(::window);
     return 0;
