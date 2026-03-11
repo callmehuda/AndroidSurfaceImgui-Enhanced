@@ -118,6 +118,7 @@ void Layout_tick_UI(bool *main_thread_flag) {
             startPreparePhaseMethod->Invoke<void>();
         }
         ImGui::End();
+    }    
         // if (::permeate_record_ini) {
             // ImGui::SetWindowPos({LastCoordinate.Pos_x, LastCoordinate.Pos_y});
             // ImGui::SetWindowSize({LastCoordinate.Size_x, LastCoordinate.Size_y});
