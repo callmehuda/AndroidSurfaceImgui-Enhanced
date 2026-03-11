@@ -2,7 +2,7 @@
 #define HORONI_HOOKS_H
 #include "UnityResolve.hpp"
 
-UnityResolve::Method* startPreparePhaseMethod;
+inline UnityResolve::Method* startPreparePhaseMethod;
 
 
 #define MYHOOK(ret, func, ...) \
