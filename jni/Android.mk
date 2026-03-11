@@ -18,7 +18,7 @@ LOCAL_MODULE := AndroidSurfaceImguiEnhanced
 
 LOCAL_CFLAGS := -std=c17
 LOCAL_CFLAGS += -fvisibility=hidden
-LOCAL_CPPFLAGS := -std=c++17
+LOCAL_CPPFLAGS := -std=c++20
 LOCAL_CPPFLAGS += -fvisibility=hidden
 LOCAL_CPPFLAGS += -fexceptions
 
