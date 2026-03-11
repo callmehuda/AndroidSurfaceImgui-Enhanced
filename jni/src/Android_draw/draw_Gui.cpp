@@ -8,6 +8,8 @@
    
 #include "My_icon/pic_ZhenAiKun_png.h"
 
+#include "Hooks.h"
+
 #include "Vars.h"
 
 bool permeate_record = false;

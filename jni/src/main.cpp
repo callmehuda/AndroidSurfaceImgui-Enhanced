@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
 
-    UnityResolve::Init(xdl_open("/data/data/com.mobilechess.gp/app_libs/liblogic.so", XDL_TRY_FORCE_LOAD), UnityResolve::Mode::Il2cpp);
+    UnityResolve::Init(xdl_open("/data/data/com.mobilechess.gp/app_libs/liblogic.so", XDL_TRY_FORCE_LOAD), UnityResolve::Mode::Il2Cpp);
     UnityResolve::ThreadAttach();
     
     Setup_Hooks();
