@@ -42,6 +42,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/include/ImGui/misc/git_freetype
 
 
 LOCAL_SRC_FILES := src/main.cpp
+LOCAL_SRC_FILES += src/Hooks.cpp
 LOCAL_SRC_FILES += src/Android_draw/draw_Gui.cpp
 LOCAL_SRC_FILES += src/Android_touch/TouchHelperA.cpp
 LOCAL_SRC_FILES += src/Android_Graphics/GraphicsManager.cpp
