@@ -60,20 +60,11 @@ jobs:
             -j$(nproc) \
             V=0
 
-      - name: Locate built .so
-        run: |
-          echo "=== Build output ==="
-          find "${{ github.workspace }}/output" -name "*.so" | tee built_libs.txt
-          if [ ! -s built_libs.txt ]; then
-            echo "ERROR: No .so files found!"
-            exit 1
-          fi
-
       # ── Upload artifact ────────────────────────────────────────────────────
       - name: Upload shared library
         uses: actions/upload-artifact@v4
         with:
           name: mymod-arm64-v8a
-          path: output/*/*/*.so
+          path: output/libs/arm64-v8a/AndroidSurfaceImguiEnhanced
           if-no-files-found: error
           retention-days: 30
